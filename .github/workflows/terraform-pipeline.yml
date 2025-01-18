@@ -37,7 +37,7 @@ jobs:
 
     - name: Generate Lambda ZIP
       working-directory: .terraform/modules/lambda_api_module/lambda_code
-      run: zip ../lambda_function.zip app.py
+      run: zip lambda_function.zip app.py
 
     # Paso 5: Validar Terraform
     - name: Terraform Validate
@@ -50,3 +50,9 @@ jobs:
     # Paso 7: Aplicar Terraform
     - name: Terraform Apply
       run: terraform apply -auto-approve
+    
+    # Paso 8: Destruir recursos en caso de fallo
+    # Este paso se ejecuta solo si algún paso anterior falla
+    - name: Terraform Destroy on Failure
+      if: failure()
+      run: terraform destroy -auto-approve
