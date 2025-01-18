@@ -1,8 +1,9 @@
-aws_region          = "us-east-1"
-lambda_env_var      = "AnalalanA"
-blocked_ips         = ["46.17.46.213/32"]
+module_aws_region          = "us-east-1"
+module_lambda_name         = "Zulu-test"
+module_lambda_env_var      = "AnalalanA"
+module_blocked_ips         = ["46.17.46.213/32"]
+module_api_name            = "consumer-api-zulu"
+module_waf_name            = "consumer-waf-zulu"
+module_cognito_user_pool_name = "consumer-cognito-pool-zulu"
 sns_email_recipient = "ds.chacon288@gmail.com"
-api_name            = "consumer-api-zulu"
-waf_name            = "consumer-waf-zulu"
-cognito_user_pool_name = "consumer-cognito-pool-zulu"
 sns_topic_name      = "consumer-alerts-zulu"

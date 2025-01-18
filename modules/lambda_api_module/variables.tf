@@ -33,13 +33,3 @@ variable "module_blocked_ips" {
   type        = list(string)
   default     = []
 }
-
-variable "sns_topic_name" {
-  description = "Name of the SNS topic for alerts"
-  type        = string
-}
-
-variable "sns_email_recipient" {
-  description = "Email address to receive SNS notifications"
-  type        = string
-}

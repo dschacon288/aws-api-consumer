@@ -1,16 +1,18 @@
 provider "aws" {
-  region = var.aws_region
+  region = var.module_aws_region
 }
 
 # Consumo del módulo del primer repositorio
 module "lambda_api_module" {
-  source              = "git::https://github.com/dschacon288/lambda_api_module.git"
-  module_aws_region          = var.aws_region
-  module_lambda_env_var      = var.lambda_env_var
-  module_blocked_ips         = var.blocked_ips
-  module_api_name            = var.api_name
-  module_waf_name            = var.waf_name
-  module_cognito_user_pool_name = var.cognito_user_pool_name
+  #source = "./modules/lambda_api_module"
+  source = "git::https://github.com/dschacon288/lambda_api_module.git"
+  module_aws_region   = var.module_aws_region
+  module_lambda_name            = var.module_lambda_name
+  module_lambda_env_var         = var.module_lambda_env_var
+  module_api_name               = var.module_api_name
+  module_cognito_user_pool_name = var.module_cognito_user_pool_name
+  module_waf_name               = var.module_waf_name
+  module_blocked_ips            = var.module_blocked_ips
 }
 
 # Configuración de un tópico SNS
