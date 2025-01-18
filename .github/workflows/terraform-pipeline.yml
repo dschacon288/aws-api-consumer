@@ -32,7 +32,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -y zip
 
     - name: Generate Lambda ZIP
-      working-directory: .terraform/modules/lambda_api_module/lambda_code
+      working-directory: modules/lambda_api_module/lambda_code
       run: zip ../lambda_function.zip app.py
 
     # Paso 5: Validar Terraform
