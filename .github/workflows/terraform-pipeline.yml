@@ -13,16 +13,21 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    # Paso 1: Clonar el Repositorio consumer
+    # Paso 1: Clonar el Repositorio Consumer
     - name: Checkout Repository Consumer
       uses: actions/checkout@v4
 
-    # Paso 2: Clonar el Repositorio que contiene el módulo reutilizable
-    - name: Clone Repository Module
-      run: |
-        git clone https://github.com/dschacon288/lambda_api_module.git .terraform/modules/lambda_api_module
+    # Paso 2: Configurar Terraform
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.1.7"
 
-    # Paso 3: Generar el ZIP de la Lambda
+    # Paso 3: Inicializar Terraform
+    - name: Terraform Init
+      run: terraform init
+
+    # Paso 4: Generar el ZIP de la Lambda
     - name: Install zip utility
       run: sudo apt-get update && sudo apt-get install -y zip
 
@@ -30,25 +35,15 @@ jobs:
       working-directory: .terraform/modules/lambda_api_module/lambda_code
       run: zip ../lambda_function.zip app.py
 
-    # Paso 4: Configurar Terraform
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v3
-      with:
-        terraform_version: "1.1.7"
-
     # Paso 5: Validar Terraform
     - name: Terraform Validate
       run: terraform validate
 
-    # Paso 6: Inicializar Terraform
-    - name: Terraform Init
-      run: terraform init
-
-    # Paso 7: Planificar Terraform
+    # Paso 6: Planificar Terraform
     - name: Terraform Plan
       run: terraform plan
 
-    # Paso 8: Aplicar Terraform
+    # Paso 7: Aplicar Terraform
     - name: Terraform Apply
       run: terraform apply -auto-approve
       env:
