@@ -5,12 +5,12 @@ provider "aws" {
 # Consumo del módulo del primer repositorio
 module "lambda_api_module" {
   source              = "git::https://github.com/dschacon288/lambda_api_module.git"
-  aws_region          = var.aws_region
-  lambda_env_var      = var.lambda_env_var
-  blocked_ips         = var.blocked_ips
-  api_name            = var.api_name
-  waf_name            = var.waf_name
-  cognito_user_pool_name = var.cognito_user_pool_name
+  module_aws_region          = var.aws_region
+  module_lambda_env_var      = var.lambda_env_var
+  module_blocked_ips         = var.blocked_ips
+  module_api_name            = var.api_name
+  module_waf_name            = var.waf_name
+  module_cognito_user_pool_name = var.cognito_user_pool_name
 }
 
 # Configuración de un tópico SNS

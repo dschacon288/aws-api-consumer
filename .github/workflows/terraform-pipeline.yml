@@ -27,10 +27,6 @@ jobs:
     - name: Terraform Init
       run: terraform init
 
-    ## Diagnosticar la Estructura del Módulo Descargado
-    - name: List Files in Module Directory
-      run: ls -R .terraform/modules/lambda_api_module
-
     # Paso 4: Generar el ZIP de la Lambda
     - name: Install zip utility
       run: sudo apt-get update && sudo apt-get install -y zip
@@ -48,8 +44,8 @@ jobs:
       run: terraform plan
 
     # Paso 7: Aplicar Terraform
-    - name: Terraform Apply
-      run: terraform apply -auto-approve
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+    # - name: Terraform Apply
+    #   run: terraform apply -auto-approve
+    #   env:
+    #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+    #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
