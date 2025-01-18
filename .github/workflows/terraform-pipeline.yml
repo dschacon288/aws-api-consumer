@@ -1,0 +1,56 @@
+name: CI/CD Pipeline for Terraform deploy
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Paso 1: Clonar el Repositorio consumer
+    - name: Checkout Repository Consumer
+      uses: actions/checkout@v4
+
+    # Paso 2: Clonar el Repositorio que contiene el módulo reutilizable
+    - name: Clone Repository Module
+      run: |
+        git clone https://github.com/dschacon288/lambda_api_module.git .terraform/modules/lambda_api_module
+
+    # Paso 3: Generar el ZIP de la Lambda
+    - name: Install zip utility
+      run: sudo apt-get update && sudo apt-get install -y zip
+
+    - name: Generate Lambda ZIP
+      working-directory: .terraform/modules/lambda_api_module/lambda_code
+      run: zip ../lambda_function.zip app.py
+
+    # Paso 4: Configurar Terraform
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v3
+      with:
+        terraform_version: "1.1.7"
+
+    # Paso 5: Validar Terraform
+    - name: Terraform Validate
+      run: terraform validate
+
+    # Paso 6: Inicializar Terraform
+    - name: Terraform Init
+      run: terraform init
+
+    # Paso 7: Planificar Terraform
+    - name: Terraform Plan
+      run: terraform plan
+
+    # Paso 8: Aplicar Terraform
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
