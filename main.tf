@@ -4,7 +4,6 @@ provider "aws" {
 
 # Consumo del módulo del primer repositorio
 module "lambda_api_module" {
-  #source = "./modules/lambda_api_module"
   source = "git::https://github.com/dschacon288/lambda_api_module.git"
   module_aws_region   = var.module_aws_region
   module_lambda_name            = var.module_lambda_name
